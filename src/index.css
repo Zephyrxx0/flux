@@ -1,0 +1,87 @@
+@import "@fontsource-variable/geist";
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "./theme.css";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 10%, color-mix(in oklab, var(--hero-gradient-a) 32%, transparent), transparent 45%),
+    radial-gradient(circle at 86% 14%, color-mix(in oklab, var(--hero-gradient-b) 30%, transparent), transparent 48%),
+    radial-gradient(circle at 75% 82%, color-mix(in oklab, var(--hero-gradient-c) 35%, transparent), transparent 40%),
+    var(--background);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+.hero-shell {
+  position: relative;
+  background:
+    linear-gradient(145deg, color-mix(in oklab, var(--card) 84%, var(--hero-gradient-a) 16%), color-mix(in oklab, var(--card) 92%, white 8%));
+}
+
+.hero-aurora {
+  position: absolute;
+  inset: -30% -20% auto;
+  height: 130%;
+  background:
+    radial-gradient(circle at 22% 22%, color-mix(in oklab, var(--hero-gradient-a) 48%, transparent), transparent 62%),
+    radial-gradient(circle at 80% 22%, color-mix(in oklab, var(--hero-gradient-b) 44%, transparent), transparent 58%),
+    radial-gradient(circle at 52% 78%, color-mix(in oklab, var(--hero-gradient-c) 46%, transparent), transparent 62%);
+  filter: blur(18px);
+  opacity: 0.9;
+}
+
+.hero-headline-highlight {
+  background: linear-gradient(115deg, color-mix(in oklab, var(--primary) 75%, var(--accent) 25%), color-mix(in oklab, var(--primary) 50%, var(--hero-gradient-b) 50%));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.hero-card {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.hero-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px color-mix(in oklab, var(--foreground) 14%, transparent);
+}
+
+.dock-shell {
+  box-shadow:
+    0 10px 35px color-mix(in oklab, var(--foreground) 18%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--foreground) 8%, transparent),
+    0 0 35px var(--dock-glow);
+}
+
+.dock-item {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition-property: background-color, border-color, box-shadow, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-card,
+  .dock-item {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
