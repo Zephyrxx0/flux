@@ -4,16 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "next dev",
     "dev:next": "next dev",
-    "build": "vite build",
+    "build": "next build",
     "build:next": "next build",
+    "start": "next start",
     "start:next": "next start",
     "preview": "vite preview",
     "test": "vitest run",
     "test:smoke": "npx vitest run tests/ui/form.test.ts tests/simulation/presets.test.ts --bail 1",
-    "docker:build": "docker build -t prompt-wars:phase5 .",
-    "deploy:cloudrun": "gcloud run deploy prompt-wars --image us-central1-docker.pkg.dev/$PROJECT_ID/prompt-wars/prompt-wars:phase5 --platform managed --region us-central1 --allow-unauthenticated"
+    "docker:build": "docker build -t predictive-fan-flow .",
+    "deploy:cloudrun": "gcloud run deploy predictive-fan-flow --image us-central1-docker.pkg.dev/$PROJECT_ID/predictive-fan-flow/predictive-fan-flow:latest --platform managed --region us-central1 --allow-unauthenticated"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.2",
