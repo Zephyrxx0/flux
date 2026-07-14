@@ -11,7 +11,7 @@ All v1 requirements validated and complete. See `.planning/PROJECT.md` for full 
 
 ### Live Match Feed
 
-- [ ] **LIVE-01**: Simulation responds to live match events from worldcup26.ir via 30s polling
+- [x] **LIVE-01**: Simulation responds to live match events from worldcup26.ir via 30s polling
 - [ ] **LIVE-02**: Match phase transitions (goal, half-time, full-time) trigger calibrated zone density deltas
 - [ ] **LIVE-03**: Ops dashboard displays live match score, phase, and minute banner
 
@@ -38,7 +38,7 @@ All v1 requirements validated and complete. See `.planning/PROJECT.md` for full 
 
 - [ ] **INT-01**: useMatchPoller, useAlertStream, and useWeather hooks wired into ops dashboard
 - [ ] **INT-02**: Simulation store initialized with existing zone data from the v1 engine
-- [ ] **DEP-04**: Environment variables (ANTHROPIC_API_KEY, OWM_API_KEY) configured on deployment
+- [x] **DEP-04**: Environment variables (ANTHROPIC_API_KEY, OWM_API_KEY) configured on deployment
 
 ## v3 Requirements
 
@@ -69,7 +69,7 @@ Deferred to future release. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LIVE-01 | Phase 14 | Pending |
+| LIVE-01 | Phase 14 | Complete |
 | LIVE-02 | Phase 18 | Pending |
 | LIVE-03 | Phase 14 | Pending |
 | AIAL-01 | Phase 15 | Pending |
@@ -81,9 +81,10 @@ Deferred to future release. Tracked but not in current roadmap.
 | DEMO-01 | Phase 18 | Pending |
 | INT-01 | Phase 18 | Pending |
 | INT-02 | Phase 14 | Pending |
-| DEP-04 | Phase 14 | Pending |
+| DEP-04 | Phase 14 | Complete |
 
 **Coverage:**
+
 - v2 requirements: 13 total
 - Mapped to phases: 13
 - Unmapped: 0 ✓

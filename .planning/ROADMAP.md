@@ -60,10 +60,11 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 14-01-PLAN.md — Data mapping layer: Zod schemas, types, mapping functions, live match heuristic
-- [ ] 14-02-PLAN.md — /api/match proxy: server-side route handler with Zod validation + error handling
-- [ ] 14-03-PLAN.md — useMatchPoller hook: polling with exponential backoff retry + Page Visibility pause
-- [ ] 14-04-PLAN.md — MatchBanner + dashboard layout: hero card, route group, sim init wiring
+
+- [x] 14-01-PLAN.md — Data mapping layer: Zod schemas, types, mapping functions, live match heuristic
+- [x] 14-02-PLAN.md — /api/match proxy: server-side route handler with Zod validation + error handling
+- [x] 14-03-PLAN.md — useMatchPoller hook: polling with exponential backoff retry + Page Visibility pause
+- [x] 14-04-PLAN.md — MatchBanner + dashboard layout: hero card, route group, sim init wiring
 
 ### Phase 15: AI Alert Stream
 
@@ -262,7 +263,7 @@ v2.0 phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 11. Integration Matrix Revalidation and Milestone Readiness | v1.0 | 1/1 | Complete | 2026-04-20 |
 | 12. Webpage Design Rehaul | v1.0 | 3/3 | Complete | 2026-04-20 |
 | 13. Foundation & Architecture Decision | v2.0 | 3/3 | Complete   | 2026-07-13 |
-| 14. Server Runtime + Match Polling | v2.0 | 0/4 | Planning complete | - |
+| 14. Server Runtime + Match Polling | v2.0 | 4/4 | Complete   | 2026-07-14 |
 | 15. AI Alert Stream | v2.0 | 0/0 | Not started | - |
 | 16. Fan Chatbot | v2.0 | 0/0 | Not started | - |
 | 17. Weather Integration | v2.0 | 0/0 | Not started | - |
