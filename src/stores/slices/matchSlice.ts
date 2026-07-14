@@ -1,15 +1,10 @@
 import { type StateCreator } from "zustand";
 import type { LiveStore } from "../liveStore";
+import { type MatchState } from "@/types/match";
 
 export interface MatchSlice {
-  match: {
-    score: string | null;
-    phase: string | null;
-    minute: number | null;
-    homeTeam: string | null;
-    awayTeam: string | null;
-  } | null;
-  setMatch: (match: MatchSlice["match"]) => void;
+  match: MatchState | null;
+  setMatch: (match: MatchState | null) => void;
 }
 
 export const createMatchSlice: StateCreator<LiveStore, [], [], MatchSlice> = (set) => ({
