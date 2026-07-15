@@ -101,13 +101,24 @@ Plans:
   4. Conversation history is maintained within session (capped at 10 messages)
    5. Quick question chips are available for one-tap demo queries
 
-**Plans**: 4 plans
-Plans:
+<<<<<<< Updated upstream
+**Plans**: TBD
+**UI hint**: yes
+=======
+**Plans**: 4 plansPlans:
+**Wave 1**
 
-- [ ] 16-01-PLAN.md — Foundation: types, store (FIFO-10), prompt builder
-- [ ] 16-02-PLAN.md — Server: POST /api/chat SSE route handler
-- [ ] 16-03-PLAN.md — Client: useChatStream hook + input components
-- [ ] 16-04-PLAN.md — UI: ChatMessage, ChatInterface, fan layout + page
+- [x] 16-01-PLAN.md — Foundation: types, store (FIFO-10), prompt builder
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [x] 16-02-PLAN.md — Server: POST /api/chat SSE route handler
+- [x] 16-03-PLAN.md — Client: useChatStream hook + input components
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [x] 16-04-PLAN.md — UI: ChatMessage, ChatInterface, fan layout + page
+>>>>>>> Stashed changes
 
 ### Phase 17: Weather Integration
 
@@ -277,6 +288,10 @@ v2.0 phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 13. Foundation & Architecture Decision | v2.0 | 3/3 | Complete   | 2026-07-13 |
 | 14. Server Runtime + Match Polling | v2.0 | 4/4 | Complete   | 2026-07-14 |
 | 15. AI Alert Stream | v2.0 | 2/3 | In Progress|  |
-| 16. Fan Chatbot | v2.0 | 0/4 | Planning | - |
+<<<<<<< Updated upstream
+| 16. Fan Chatbot | v2.0 | 0/0 | Not started | - |
+=======
+| 16. Fan Chatbot | v2.0 | 4/4 | Complete   | 2026-07-15 |
+>>>>>>> Stashed changes
 | 17. Weather Integration | v2.0 | 0/0 | Not started | - |
 | 18. Demo Mode + Integration Wiring | v2.0 | 0/0 | Not started | - |
