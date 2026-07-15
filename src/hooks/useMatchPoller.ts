@@ -14,7 +14,7 @@ const POLL_INTERVAL = 30_000;
 const MAX_RETRIES = 3;
 const RETRY_BASE = 1_000;
 
-export function useMatchPoller(fetchFn: () => Promise<MatchState>) {
+export function useMatchPoller(fetchFn: () => Promise<MatchState>, enabled: boolean = true) {
   const [state, setState] = useState<PollerState>({
     data: null,
     error: null,
@@ -44,7 +44,7 @@ export function useMatchPoller(fetchFn: () => Promise<MatchState>) {
   }, []);
 
   const doFetch = useCallback(async () => {
-    if (!isVisibleRef.current) return;
+    if (!isVisibleRef.current || !enabled) return;
 
     try {
       const result = await fetchFnRef.current();
@@ -75,6 +75,12 @@ export function useMatchPoller(fetchFn: () => Promise<MatchState>) {
   }, []);
 
   useEffect(() => {
+    if (enabled === false) {
+      clearTimers();
+      setState(prev => ({ ...prev, isPolling: false }));
+      return;
+    }
+
     const handleVisibilityChange = () => {
       isVisibleRef.current = !document.hidden;
       if (isVisibleRef.current) {
@@ -104,7 +110,7 @@ export function useMatchPoller(fetchFn: () => Promise<MatchState>) {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       clearTimers();
     };
-  }, [doFetch, clearTimers]);
+  }, [doFetch, clearTimers, enabled]);
 
   return state;
 }
