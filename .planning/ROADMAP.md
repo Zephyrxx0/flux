@@ -52,13 +52,19 @@ Plans:
 **Requirements**: LIVE-01, LIVE-03, INT-02, DEP-04
 **Success Criteria** (what must be TRUE):
 
-  1. Ops dashboard displays live match score, phase, and minute in a MatchBanner component
-  2. Match data from worldcup26.ir is fetched every 30s via `/api/match` proxy and updates simulation state
-  3. Simulation store (`simulationStore`) initializes with existing zone data from v1 engine
-  4. Application serves from the new server runtime (Express or Next.js) with environment variables configured
+   1. Ops dashboard displays live match score, phase, and minute in a MatchBanner component
+   2. Match data from worldcup26.ir is fetched every 30s via `/api/match` proxy and updates simulation state
+   3. Simulation store (`simulationStore`) initializes with existing zone data from v1 engine
+   4. Application serves from the new server runtime (Express or Next.js) with environment variables configured
 
-**Plans**: TBD
-**UI hint**: yes
+**Plans**: 4 plans
+
+Plans:
+
+- [x] 14-01-PLAN.md — Data mapping layer: Zod schemas, types, mapping functions, live match heuristic
+- [x] 14-02-PLAN.md — /api/match proxy: server-side route handler with Zod validation + error handling
+- [x] 14-03-PLAN.md — useMatchPoller hook: polling with exponential backoff retry + Page Visibility pause
+- [x] 14-04-PLAN.md — MatchBanner + dashboard layout: hero card, route group, sim init wiring
 
 ### Phase 15: AI Alert Stream
 
@@ -67,12 +73,19 @@ Plans:
 **Requirements**: AIAL-01, AIAL-02
 **Success Criteria** (what must be TRUE):
 
-  1. Ops dashboard displays live AI alerts categorized by severity (nominal, warning, critical) in an AlertFeed component
-  2. Alert feed updates automatically as new alerts arrive via SSE, with auto-scroll to latest
-  3. Alerts are visually distinct by severity level (color, icon, urgency treatment)
-  4. AbortController cancels alert generation on component unmount or page navigation
+   1. Ops dashboard displays live AI alerts categorized by severity (nominal, warning, critical) in an AlertFeed component
+   2. Alert feed updates automatically as new alerts arrive via SSE, with auto-scroll to latest
+   3. Alerts are visually distinct by severity level (color, icon, urgency treatment)
+   4. AbortController cancels alert generation on component unmount or page navigation
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+
+- [x] 15-01-PLAN.md — Server-Side Alert Pipeline (Gemini utility, prompt builder, SSE route handler)
+- [x] 15-02-PLAN.md — Client-Side Alert Infrastructure (alertSlice FIFO, useAlertStream hook, AlertFeed component)
+- [ ] 15-03-PLAN.md — Dashboard Integration + Eval Setup (wire into dashboard, promptfoo config, env vars)
+
 **UI hint**: yes
 
 ### Phase 16: Fan Chatbot
@@ -86,10 +99,27 @@ Plans:
   2. Fan can ask stadium navigation questions and receive contextually grounded answers that reflect live zone density and match state
   3. Chatbot responses stream in as they're generated (SSE) with buffered rendering
   4. Conversation history is maintained within session (capped at 10 messages)
-  5. Quick question chips are available for one-tap demo queries
+   5. Quick question chips are available for one-tap demo queries
 
+<<<<<<< Updated upstream
 **Plans**: TBD
 **UI hint**: yes
+=======
+**Plans**: 4 plansPlans:
+**Wave 1**
+
+- [x] 16-01-PLAN.md — Foundation: types, store (FIFO-10), prompt builder
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [x] 16-02-PLAN.md — Server: POST /api/chat SSE route handler
+- [x] 16-03-PLAN.md — Client: useChatStream hook + input components
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [x] 16-04-PLAN.md — UI: ChatMessage, ChatInterface, fan layout + page
+
+>>>>>>> Stashed changes
 
 ### Phase 17: Weather Integration
 
@@ -100,9 +130,18 @@ Plans:
 
   1. Ops dashboard shows a WeatherCard with current weather conditions (temperature, conditions, icon)
   2. Zone densities adjust based on weather factors (rain accelerates egress, heat reduces capacity) as an overlay on planned density
-  3. Weather data refreshes automatically at appropriate intervals (10min) without manual reload
+   3. Weather data refreshes automatically at appropriate intervals (10min) without manual reload
 
-**Plans**: TBD
+**Plans**: 3 plansPlans:
+**Wave 1**
+
+- [x] 17-01-PLAN.md — OWM API proxy, weather mapping utility, test suite
+- [x] 17-02-PLAN.md — useWeather hook (10-min polling, impact change detection), weatherSlice extension
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [x] 17-03-PLAN.md — WeatherCard component (5 states), dashboard layout integration, impact-triggered re-sim
+
 **UI hint**: yes
 
 ### Phase 18: Demo Mode + Integration Wiring
@@ -118,7 +157,11 @@ Plans:
   4. Demo/live toggle works with complete state reset and visual "DEMO MODE" indicator
   5. All components accessible through MagneticDock navigation tabs
 
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 18-01-PLAN.md — Demo Mode Content: types, API route, phase transition deltas, demo sequence hook, demo UI components + tests
+- [ ] 18-02-PLAN.md — Integration Wiring: phase transition watcher, dashboard page/layout orchestration, MagneticDock navigation tabs
+
 **UI hint**: yes
 
 ---
@@ -257,8 +300,12 @@ v2.0 phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18
 | 11. Integration Matrix Revalidation and Milestone Readiness | v1.0 | 1/1 | Complete | 2026-04-20 |
 | 12. Webpage Design Rehaul | v1.0 | 3/3 | Complete | 2026-04-20 |
 | 13. Foundation & Architecture Decision | v2.0 | 3/3 | Complete   | 2026-07-13 |
-| 14. Server Runtime + Match Polling | v2.0 | 0/0 | Not started | - |
-| 15. AI Alert Stream | v2.0 | 0/0 | Not started | - |
+| 14. Server Runtime + Match Polling | v2.0 | 4/4 | Complete   | 2026-07-14 |
+| 15. AI Alert Stream | v2.0 | 2/3 | In Progress|  |
+<<<<<<< Updated upstream
 | 16. Fan Chatbot | v2.0 | 0/0 | Not started | - |
-| 17. Weather Integration | v2.0 | 0/0 | Not started | - |
+=======
+| 16. Fan Chatbot | v2.0 | 4/4 | Complete   | 2026-07-15 |
+>>>>>>> Stashed changes
+| 17. Weather Integration | v2.0 | 3/3 | Complete   | 2026-07-15 |
 | 18. Demo Mode + Integration Wiring | v2.0 | 0/0 | Not started | - |

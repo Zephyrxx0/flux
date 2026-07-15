@@ -1,0 +1,116 @@
+"use client";
+
+import { useEffect, useRef, useState, useCallback } from "react";
+import { type DemoEvent } from "@/types/demo";
+import { useLiveStore, liveStore } from "@/stores/liveStore";
+import { applyPhaseTransitionDeltas } from "@/lib/api/phaseTransitions";
+import { presets } from "@/simulation/presets";
+
+export function useDemoSequence(isActive: boolean, advanceIntervalMs: number = 5000) {
+  const [timeline, setTimeline] = useState<DemoEvent[] | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const isVisibleRef = useRef(true);
+  const timelineRef = useRef<DemoEvent[] | null>(null);
+  
+  const setMatch = useLiveStore((s) => s.setMatch);
+
+  // Sync timeline state to ref for effect dependencies
+  useEffect(() => {
+    timelineRef.current = timeline;
+  }, [timeline]);
+
+  // Fetch timeline on activate
+  useEffect(() => {
+    if (isActive && !timelineRef.current) {
+      fetch("/api/demo")
+        .then((res) => res.json())
+        .then((data) => {
+          setTimeline(data);
+          setCurrentIndex(0);
+          setIsPlaying(true);
+        })
+        .catch((err) => {
+          console.error("Failed to fetch demo timeline", err);
+        });
+    }
+  }, [isActive]);
+
+  const advanceTimeline = useCallback(() => {
+    if (!isVisibleRef.current) return;
+    
+    setCurrentIndex((prev) => {
+      const currentTimeline = timelineRef.current;
+      if (!currentTimeline) return prev;
+      
+      const nextIndex = prev + 1;
+      if (nextIndex >= currentTimeline.length) {
+        return prev; // Stay at last index
+      }
+      return nextIndex;
+    });
+  }, []);
+
+  // Stop playing when we reach the end
+  useEffect(() => {
+    if (timeline && currentIndex >= timeline.length - 1 && isPlaying) {
+      setIsPlaying(false);
+    }
+  }, [timeline, currentIndex, isPlaying]);
+
+  // Interval management
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      isVisibleRef.current = !document.hidden;
+    };
+    
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    isVisibleRef.current = typeof document !== 'undefined' ? !document.hidden : true;
+
+    if (isActive && isPlaying) {
+      intervalRef.current = setInterval(advanceTimeline, advanceIntervalMs);
+    }
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isActive, isPlaying, advanceIntervalMs, advanceTimeline]);
+
+  // Apply event effect
+  useEffect(() => {
+    if (timeline && currentIndex >= 0 && currentIndex < timeline.length) {
+      const event = timeline[currentIndex];
+      
+      // 1. Update Match State
+      setMatch({
+        score: event.score,
+        phase: event.phase,
+        minute: event.minute,
+        homeTeam: "Team A",
+        awayTeam: "Team B",
+      });
+
+      // 2. Apply Zone Deltas if present (LIVE-02)
+      if (event.zoneDeltas && event.zoneDeltas.length > 0 || event.eventType === "halftime" || event.eventType === "full-time") {
+        const state = liveStore.getState();
+        const baseInput = state.v1ZoneData ?? presets.normal;
+        
+        const adjusted = applyPhaseTransitionDeltas(baseInput, event.eventType, event.zoneDeltas);
+        state.initializeSim(adjusted);
+      }
+    }
+  }, [timeline, currentIndex, setMatch]);
+
+  return {
+    currentEvent: timeline?.[currentIndex] ?? null,
+    isPlaying,
+    totalEvents: timeline?.length ?? 0,
+    currentIndex,
+  };
+}

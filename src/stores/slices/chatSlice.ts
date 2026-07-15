@@ -7,11 +7,20 @@ export interface ChatSlice {
   isStreaming: boolean;
   addMessage: (message: ChatMessage) => void;
   setStreaming: (isStreaming: boolean) => void;
+  clearMessages: () => void;
 }
 
 export const createChatSlice: StateCreator<LiveStore, [], [], ChatSlice> = (set) => ({
   messages: [],
   isStreaming: false,
-  addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
+  addMessage: (message) =>
+    set((state) => {
+      const newMessages = [...state.messages, message];
+      if (newMessages.length > 10) {
+        return { messages: newMessages.slice(-9) };
+      }
+      return { messages: newMessages };
+    }),
   setStreaming: (isStreaming) => set({ isStreaming }),
+  clearMessages: () => set({ messages: [], isStreaming: false }),
 });
