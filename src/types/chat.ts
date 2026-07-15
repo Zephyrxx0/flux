@@ -10,7 +10,23 @@ export const ChatMessageSchema = z.object({
 export type ChatMessage = z.infer<typeof ChatMessageSchema>;
 
 export const ChatRequestSchema = z.object({
-  message: z.string().min(1),
+  messages: z.array(ChatMessageSchema).max(10).default([]),
 });
 
 export type ChatRequest = z.infer<typeof ChatRequestSchema>;
+
+export const ChatResponseSchema = z.object({
+  text: z.string().min(1),
+  suggestedGate: z.string().nullable().optional(),
+  walkingTime: z.string().nullable().optional(),
+  zoneInfo: z
+    .object({
+      zoneId: z.string(),
+      name: z.string(),
+      occupancyRatio: z.number().min(0).max(1),
+    })
+    .nullable()
+    .optional(),
+});
+
+export type ChatResponse = z.infer<typeof ChatResponseSchema>;
