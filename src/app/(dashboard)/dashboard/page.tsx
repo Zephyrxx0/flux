@@ -34,7 +34,11 @@ export default function DashboardPage() {
     if (!res.ok) throw new Error(`Weather poll failed: ${res.status}`);
     const json = await res.json();
     const weatherData = json as WeatherData;
-    setWeather(weatherData);
+    setWeather({
+      ...weatherData,
+      humidity: weatherData.humidity ?? null,
+      windSpeed: weatherData.windSpeed ?? null,
+    });
     setLastFetchTime(Date.now());
     return weatherData;
   }, [setWeather, setLastFetchTime]);

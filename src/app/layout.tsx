@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: "Scenario-driven crowd risk simulation and planning",
 }
 
+import { MagneticDock } from "@/components/layout/MagneticDock"
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,6 +20,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
+          <MagneticDock />
         </ThemeProvider>
       </body>
     </html>
