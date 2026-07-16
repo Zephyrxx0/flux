@@ -108,3 +108,7 @@ docs/local-setup-run-test-gcp.md
 .planning/
 # Vite cache
 .vite/
+
+
+*.md
+!.planning/
