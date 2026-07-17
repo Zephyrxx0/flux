@@ -113,3 +113,4 @@ next-env.d.ts
 
 *.md
 !.planning/
+!.planning/**/*-UI-REVIEW.md
