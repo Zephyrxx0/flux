@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 import { MagneticDock } from "@/components/layout/MagneticDock"
 import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
+import { ChatPanel } from "@/components/fan/ChatPanel"
 
 export default function RootLayout({
   children,
@@ -27,6 +28,7 @@ export default function RootLayout({
             {children}
           </div>
           <MagneticDock />
+          <ChatPanel />
           <Footer />
         </ThemeProvider>
       </body>

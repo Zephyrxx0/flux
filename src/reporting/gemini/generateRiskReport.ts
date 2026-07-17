@@ -40,12 +40,12 @@ function parseAiPayload(rawPayload: string): RiskReport {
 }
 
 async function invokeGeminiViaFetch(prompt: string, timeoutMs: number): Promise<string> {
-  const apiKey = import.meta.env.VITE_GEMINI_API_KEY
+  const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY ?? import.meta.env?.VITE_GEMINI_API_KEY
   if (!apiKey) {
-    throw new GeminiServerError("Missing VITE_GEMINI_API_KEY")
+    throw new GeminiServerError("Missing NEXT_PUBLIC_GEMINI_API_KEY")
   }
 
-  const model = import.meta.env.VITE_GEMINI_MODEL ?? DEFAULT_MODEL
+  const model = process.env.NEXT_PUBLIC_GEMINI_MODEL ?? import.meta.env?.VITE_GEMINI_MODEL ?? DEFAULT_MODEL
   const controller = new AbortController()
   const timeout = window.setTimeout(() => controller.abort(), timeoutMs)
 
@@ -98,7 +98,7 @@ async function invokeGeminiViaFetch(prompt: string, timeoutMs: number): Promise<
   }
 }
 
-export async function generateRiskReport({ output, invokeModel, timeoutMs = 10_000 }: GenerateRiskReportArgs): Promise<RiskReport> {
+export async function generateRiskReport({ output, invokeModel, timeoutMs = 60_000 }: GenerateRiskReportArgs): Promise<RiskReport> {
   const prompt = buildGeminiRiskPrompt(output)
   const invoke = invokeModel ?? ((inputPrompt: string) => invokeGeminiViaFetch(inputPrompt, timeoutMs))
   const rawResponse = await invoke(prompt)

@@ -4,6 +4,7 @@ export const ChatMessageSchema = z.object({
   id: z.string(),
   role: z.enum(["user", "assistant"]),
   content: z.string(),
+  structuredData: z.any().optional(),
   timestamp: z.string().datetime(),
 });
 

@@ -23,7 +23,6 @@ export function MagneticDock() {
       { label: "Compare", target: "/compare", icon: GitCompareArrows },
       { label: "Report", target: "/report", icon: FileText },
       { label: "Dashboard", target: "/dashboard", icon: LayoutDashboard },
-      { label: "Fan Chat", target: "/fan", icon: MessageSquare },
     ],
     []
   )

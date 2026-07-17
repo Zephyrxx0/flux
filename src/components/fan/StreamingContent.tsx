@@ -12,7 +12,7 @@ export function StreamingContent({ text, structured }: StreamingContentProps) {
   return (
     <div className="space-y-3">
       {text && (
-        <p className="text-[15px] font-normal leading-relaxed whitespace-pre-wrap">
+        <p className="text-[15px] font-normal leading-relaxed whitespace-pre-wrap break-words overflow-hidden">
           {text}
         </p>
       )}

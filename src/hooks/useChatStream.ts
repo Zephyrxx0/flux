@@ -5,6 +5,7 @@ import type { ChatMessage, ChatResponse } from "@/types/chat";
 
 export function useChatStream() {
   const addMessage = useLiveStore((s) => s.addMessage);
+  const updateMessage = useLiveStore((s) => s.updateMessage);
   const setStreaming = useLiveStore((s) => s.setStreaming);
   const match = useLiveStore((s) => s.match);
 
@@ -81,8 +82,12 @@ export function useChatStream() {
                 if (!dataStr) continue;
                 try {
                   const data = JSON.parse(dataStr);
-                  // Token accumulation is handled — UI reads from store
-                  // (no per-token store update to avoid excessive re-renders)
+                  if (data.type === "token" && data.text) {
+                    assistantContent += data.text;
+                    updateMessage(assistantId, { content: assistantContent });
+                  } else if (data.type === "structured" && data.response) {
+                    updateMessage(assistantId, { structuredData: data.response });
+                  }
                 } catch {
                   // Ignore parse errors
                 }
