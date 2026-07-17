@@ -1,88 +1,42 @@
-# Crowd Dynamics Engine (Public)
+# Crowd Dynamics Engine
 
-A web-based crowd / flow simulation sandbox for running scenarios, comparing outcomes, and exporting results. This repository contains the frontend app (React + TypeScript) built with **Vite**, with optional **Next.js** scripts present for experimentation/alternate builds.
+A web-based crowd flow simulation sandbox — run scenarios, compare outcomes, and export results. Built with **Next.js** (React + TypeScript).
 
-## What’s in this repo
+## Quickstart
 
-- **Vite + React + TypeScript** application (`npm run dev`, `npm run build`)
-- UI + visualization stack includes **Three.js / @react-three/fiber**, **d3**, Tailwind, and component utilities
-- Test suite powered by **Vitest**
-- Containerized static deployment: **build with Vite → serve with Nginx** (see `Dockerfile`, `nginx.conf`)
-- Cloud Run deployment runbook in `docs/deployment/cloud-run.md`
-
-## Quickstart (local)
-
-### Prerequisites
-- Node.js (the Docker build uses Node 22; a recent Node LTS should work best)
-- npm
-
-### Install
 ```bash
-npm ci
+pnpm install
+pnpm dev
 ```
 
-### Run (Vite)
-```bash
-npm run dev
-```
+Open [http://localhost:3000](http://localhost:3000).
 
-### Build
-```bash
-npm run build
-npm run preview
-```
+## Scripts
 
-## Tests
+| Command          | Description                  |
+| ---------------- | ---------------------------- |
+| `pnpm dev`       | Start dev server             |
+| `pnpm build`     | Production build             |
+| `pnpm start`     | Start production server      |
+| `pnpm lint`      | Run linter                   |
+| `pnpm typecheck` | Run TypeScript checks        |
 
-Run all tests:
-```bash
-npm test
-```
+## Stack
 
-Run the smoke tests (focused UI + preset checks):
-```bash
-npm run test:smoke
-```
+- **Framework**: Next.js (React + TypeScript)
+- **Styling**: Tailwind CSS v4
+- **Animation**: GSAP, Anime.js v4
+- **3D Visualization**: Three.js / @react-three/fiber, d3
+- **Deployment**: Vercel
 
-## Deployment
+## Project Structure
 
-### Docker (local)
-Build the container:
-```bash
-npm run docker:build
-```
-
-This builds the Vite app and serves it via Nginx.
-
-### Google Cloud Run
-A step-by-step runbook is available here:
-
-- `docs/deployment/cloud-run.md`
-
-It covers building/tagging/pushing the image and deploying it, plus an acceptance checklist (SPA refresh, run/compare/export flow, and a `/healthz` check).
-
-## Project structure (high level)
-
-From the repository layout, the source tree is organized around major product areas:
-
-- `src/main.tsx` — Vite entry point
-- `src/App.tsx` — main app component
-- `src/simulation/` — scenario/simulation domain
-- `src/comparison/` — comparing baseline vs candidate runs
-- `src/export/` — export/serialization of results
-- `src/reporting/` — reporting/summary outputs
-- `src/visualization/` — visuals/3D/plots
-- `src/components/`, `src/hooks/`, `src/lib/` — shared UI, hooks, and utilities
-
-## Configuration
-
-- `.env.example` — example environment variables
-- `vite.config.ts`, `tsconfig.json`, `tailwind.config.ts`, `vitest.config.ts` — tooling configuration
-
-## Notes
-
-- The npm scripts include optional Next.js commands (`dev:next`, `build:next`, `start:next`), but the container/deployment flow is currently oriented around the **Vite static build** (`dist/`) served by Nginx.
-
-## License
-
-If this project has a specific license, add it here (e.g., MIT/Apache-2.0) and include a `LICENSE` file at the repository root.
+- `src/app/` — Next.js App Router pages and layouts
+- `src/components/` — Shared UI components
+- `src/simulation/` — Simulation domain logic
+- `src/comparison/` — Baseline vs candidate comparison
+- `src/export/` — Result export/serialization
+- `src/reporting/` — Summary and reporting output
+- `src/visualization/` — 3D visuals, plots, charts
+- `src/hooks/` — Custom React hooks
+- `src/lib/` — Shared utilities

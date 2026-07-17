@@ -102,13 +102,16 @@ predictive-fan-flow-plan.md
 opencode.json
 prompt-wars.code-workspace
 
-docs/local-setup-run-test-gcp.md
+docs/
 .vscode/mcp.json
 .next
 next-env.d.ts
 .planning/
 # Vite cache
 .vite/
+# Deployment artifacts (Vercel-native, no Docker/Cloud Run)
+Dockerfile
+.dockerignore
 
 
 *.md
