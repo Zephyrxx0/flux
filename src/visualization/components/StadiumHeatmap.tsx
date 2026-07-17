@@ -16,7 +16,7 @@ type StadiumHeatmapProps = {
 
 const NO_DATA_FILL = "#cbd5e1"
 
-function colorForBand(band: "green" | "amber" | "red") {
+function colorForBand(band: "green" | "amber" | "red" | "critical") {
   return RISK_LEGEND.find((entry) => entry.band === band)?.color ?? NO_DATA_FILL
 }
 
@@ -67,7 +67,18 @@ export function StadiumHeatmap({ latestZoneRisk }: StadiumHeatmapProps) {
         data-transition-ms={VISUALIZATION_TRANSITION_MS}
         data-reduced-motion={String(reducedMotion)}
       >
-        <rect x="10" y="40" width="580" height="330" rx="36" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="2" />
+        <rect x="0" y="0" width="600" height="380" rx="40" fill="#020617" />
+        
+        {/* Pitch */}
+        <rect x="130" y="110" width="340" height="160" fill="#064e3b" />
+        {/* Pitch Lines */}
+        <rect x="130" y="110" width="340" height="160" fill="none" stroke="#ffffff" strokeWidth="1.5" opacity="0.6" />
+        <line x1="300" y1="110" x2="300" y2="270" stroke="#ffffff" strokeWidth="1.5" opacity="0.6" />
+        <circle cx="300" cy="190" r="30" fill="none" stroke="#ffffff" strokeWidth="1.5" opacity="0.6" />
+        <rect x="130" y="145" width="45" height="90" fill="none" stroke="#ffffff" strokeWidth="1.5" opacity="0.6" />
+        <rect x="425" y="145" width="45" height="90" fill="none" stroke="#ffffff" strokeWidth="1.5" opacity="0.6" />
+        
+        <g data-testid="stadium-heatmap-zones">
         {polygonZoneIds.map((zoneId) => {
           const polygon = STADIUM_ZONE_POLYGONS[zoneId]
           const latest = latestZoneRisk[zoneId]
@@ -115,6 +126,7 @@ export function StadiumHeatmap({ latestZoneRisk }: StadiumHeatmapProps) {
             />
           )
         })}
+        </g>
       </svg>
 
       <p className="text-xs text-slate-500">Grey regions indicate no current simulation data for that zone.</p>
