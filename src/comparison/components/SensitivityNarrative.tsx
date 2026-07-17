@@ -10,9 +10,9 @@ export function SensitivityNarrative({ model }: SensitivityNarrativeProps) {
 
   return (
     <section className="space-y-2" data-testid="sensitivity-narrative">
-      <h3 className="text-sm font-semibold text-slate-900">Intervention Sensitivity</h3>
-      <p className="text-xs text-slate-700">{narrative.overall}</p>
-      <ul className="space-y-1 text-xs text-slate-700">
+      <h3 className="text-sm font-semibold text-foreground">Intervention Sensitivity</h3>
+      <p className="text-xs text-muted-foreground">{narrative.overall}</p>
+      <ul className="space-y-1 text-xs text-muted-foreground">
         {narrative.zones.map((zone) => (
           <li key={zone.zoneId}>{zone.sentence}</li>
         ))}
