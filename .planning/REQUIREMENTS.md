@@ -45,8 +45,8 @@ All v1 requirements validated and complete. See `.planning/PROJECT.md` for full 
 - [x] **SEC-01**: Client-exposed Gemini access removed; AI calls use server-side routes and server-only `GEMINI_API_KEY`
 - [x] **CODEQ-01**: Audit-driven code quality findings remediated across polling, storage, simulation, typing, naming, icons, and hook state
 - [x] **FEAT-01**: Live operations UX expanded with sustainability, volunteer dynamism, transport status, and fan map highlighting
-- [ ] **TEST-01**: Phase 19 regression and property test coverage added
-- [ ] **A11Y-01**: Phase 19 accessibility remediation completed
+- [x] **TEST-01**: Phase 19 regression and property test coverage added
+- [x] **A11Y-01**: Phase 19 accessibility remediation completed
 
 ## v3 Requirements
 
@@ -93,8 +93,8 @@ Deferred to future release. Tracked but not in current roadmap.
 | SEC-01 | Phase 19 | Complete |
 | CODEQ-01 | Phase 19 | Complete |
 | FEAT-01 | Phase 19 | Complete |
-| TEST-01 | Phase 19 | Pending |
-| A11Y-01 | Phase 19 | Pending |
+| TEST-01 | Phase 19 | Complete |
+| A11Y-01 | Phase 19 | Complete |
 
 **Coverage:**
 

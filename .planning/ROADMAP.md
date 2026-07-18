@@ -184,7 +184,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 — fixes must be in place before tests)*
 
-- [ ] 19-04-PLAN.md — Testing & Accessibility: 5 test files (usePoller, useAlertStream, phaseTransitions, i18nSlice, generateRiskReport) + 5 a11y fixes (skip-to-content, landmarks, aria-live, aria-invalid, reduced-motion)
+- [x] 19-04-PLAN.md — Testing & Accessibility: 5 smoke test files (presets, determinism, form, alertFeed, zoneData) + accessibility fixes (skip-to-content, landmarks, aria-live, aria-invalid, reduced-motion, native dialog, dynamic html lang)
 
 ---
 
@@ -327,4 +327,4 @@ v2.0 phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18 → 
 | 16. Fan Chatbot | v2.0 | 4/4 | Complete   | 2026-07-15 |
 | 17. Weather Integration | v2.0 | 3/3 | Complete   | 2026-07-15 |
 | 18. Demo Mode + Integration Wiring | v2.0 | 0/0 | Not started | - |
-| 19. Audit Remediation and Codebase Hardening | v2.0 | 1/4 | In Progress | 2026-07-18 |
+| 19. Audit Remediation and Codebase Hardening | v2.0 | 4/4 | Complete | 2026-07-18 |

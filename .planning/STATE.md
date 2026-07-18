@@ -824,6 +824,15 @@ Phase 19 planning complete. Ready for execution.
 - Requirements IDs from plan frontmatter: `CODEQ-01`, `SEC-01`; `gsd-tools requirements.mark-complete` reported both IDs are not present in `.planning/REQUIREMENTS.md`.
 - Next: Plan 19-03 can remove client-exposed Gemini key usage now that `/api/report` exists.
 
+## Phase 19 Plan 04 Completion
+
+- Completed testing and accessibility hardening: five plan-scoped smoke/property test files now cover presets, deterministic simulation, ScenarioForm, AlertFeed, and zoneData.
+- Completed accessibility remediation: skip-to-content, dashboard heading landmark, `DynamicHtmlLang`, derived AlertFeed `aria-live`, sr-only transport status text, reduced-motion CSS, `aria-invalid` form errors, and native `<dialog>` ChatPanel.
+- Task commits: `7f3a617` (accessibility), `6019a5b` (tests).
+- Verification: `npx tsc --noEmit` passed; targeted 19-04 Vitest command passed (5 files, 24 tests).
+- Broader scoped `npx vitest run tests/simulation/ tests/ui/ tests/api/ --reporter=verbose` remains blocked by unrelated failures in weather API tests, volunteer gate text expectation, and missing deployment artifacts.
+- Requirements completed: `TEST-01`, `A11Y-01`.
+
 ## Phase 19 Key Decisions (from discuss-phase)
 
 - D-19-01: 10 total languages — EN/ES/FR + AR/PT/DE/JA/KO/NL/IT
