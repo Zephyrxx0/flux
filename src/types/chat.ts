@@ -1,21 +1,5 @@
 import { z } from "zod";
 
-export const ChatMessageSchema = z.object({
-  id: z.string(),
-  role: z.enum(["user", "assistant"]),
-  content: z.string(),
-  structuredData: z.any().optional(),
-  timestamp: z.string().datetime(),
-});
-
-export type ChatMessage = z.infer<typeof ChatMessageSchema>;
-
-export const ChatRequestSchema = z.object({
-  messages: z.array(ChatMessageSchema).max(10).default([]),
-});
-
-export type ChatRequest = z.infer<typeof ChatRequestSchema>;
-
 export const ChatResponseSchema = z.object({
   text: z.string().min(1),
   suggestedGate: z.string().nullable().optional(),
@@ -31,3 +15,19 @@ export const ChatResponseSchema = z.object({
 });
 
 export type ChatResponse = z.infer<typeof ChatResponseSchema>;
+
+export const ChatMessageSchema = z.object({
+  id: z.string(),
+  role: z.enum(["user", "assistant"]),
+  content: z.string(),
+  structuredData: ChatResponseSchema.nullable().optional(),
+  timestamp: z.string().datetime(),
+});
+
+export type ChatMessage = z.infer<typeof ChatMessageSchema>;
+
+export const ChatRequestSchema = z.object({
+  messages: z.array(ChatMessageSchema).max(10).default([]),
+});
+
+export type ChatRequest = z.infer<typeof ChatRequestSchema>;

@@ -47,7 +47,7 @@ export function usePhaseTransitionWatcher(currentDemoEvent?: DemoEvent | null) {
             }
 
             const currentState = liveStore.getState();
-            const baseInput = currentState.v1ZoneData ?? presets.normal;
+            const baseInput = currentState.simConfig ?? presets.normal;
             const adjusted = applyPhaseTransitionDeltas(baseInput, eventType);
             currentState.initializeSim(adjusted);
           }
@@ -73,7 +73,7 @@ export function usePhaseTransitionWatcher(currentDemoEvent?: DemoEvent | null) {
             }
 
             const currentState = liveStore.getState();
-            const baseInput = currentState.v1ZoneData ?? presets.normal;
+            const baseInput = currentState.simConfig ?? presets.normal;
             const adjusted = applyPhaseTransitionDeltas(baseInput, "goal", [
               { zoneId: "north", deltaPercent: 20 },
               { zoneId: "south", deltaPercent: 20 },

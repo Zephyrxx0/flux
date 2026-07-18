@@ -7,7 +7,6 @@ import { applyPhaseTransitionDeltas } from "@/lib/api/phaseTransitions";
 import { presets } from "@/simulation/presets";
 
 export function useDemoSequence(isActive: boolean, advanceIntervalMs: number = 5000) {
-  const [timeline, setTimeline] = useState<DemoEvent[] | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -17,18 +16,13 @@ export function useDemoSequence(isActive: boolean, advanceIntervalMs: number = 5
   
   const setMatch = useLiveStore((s) => s.setMatch);
 
-  // Sync timeline state to ref for effect dependencies
-  useEffect(() => {
-    timelineRef.current = timeline;
-  }, [timeline]);
-
   // Fetch timeline on activate
   useEffect(() => {
     if (isActive && !timelineRef.current) {
       fetch("/api/demo")
         .then((res) => res.json())
         .then((data) => {
-          setTimeline(data);
+          timelineRef.current = data;
           setCurrentIndex(0);
           setIsPlaying(true);
         })
@@ -55,10 +49,11 @@ export function useDemoSequence(isActive: boolean, advanceIntervalMs: number = 5
 
   // Stop playing when we reach the end
   useEffect(() => {
+    const timeline = timelineRef.current;
     if (timeline && currentIndex >= timeline.length - 1 && isPlaying) {
       setIsPlaying(false);
     }
-  }, [timeline, currentIndex, isPlaying]);
+  }, [currentIndex, isPlaying]);
 
   // Interval management
   useEffect(() => {
@@ -84,6 +79,7 @@ export function useDemoSequence(isActive: boolean, advanceIntervalMs: number = 5
 
   // Apply event effect
   useEffect(() => {
+    const timeline = timelineRef.current;
     if (timeline && currentIndex >= 0 && currentIndex < timeline.length) {
       const event = timeline[currentIndex];
       
@@ -99,18 +95,18 @@ export function useDemoSequence(isActive: boolean, advanceIntervalMs: number = 5
       // 2. Apply Zone Deltas if present (LIVE-02)
       if (event.zoneDeltas && event.zoneDeltas.length > 0 || event.eventType === "halftime" || event.eventType === "full-time") {
         const state = liveStore.getState();
-        const baseInput = state.v1ZoneData ?? presets.normal;
+        const baseInput = state.simConfig ?? presets.normal;
         
         const adjusted = applyPhaseTransitionDeltas(baseInput, event.eventType, event.zoneDeltas);
         state.initializeSim(adjusted);
       }
     }
-  }, [timeline, currentIndex, setMatch]);
+  }, [currentIndex, setMatch]);
 
   return {
-    currentEvent: timeline?.[currentIndex] ?? null,
+    currentEvent: timelineRef.current?.[currentIndex] ?? null,
     isPlaying,
-    totalEvents: timeline?.length ?? 0,
+    totalEvents: timelineRef.current?.length ?? 0,
     currentIndex,
   };
 }
