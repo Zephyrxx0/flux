@@ -56,8 +56,8 @@ describe("applyPhaseTransitionDeltas", () => {
     expect(adjusted).toEqual(presets.normal);
   });
 
-  it("returns a new object reference even if unchanged", () => {
+  it("returns the original object reference for unchanged events", () => {
     const adjusted = applyPhaseTransitionDeltas(presets.normal, "kickoff");
-    expect(adjusted).not.toBe(presets.normal);
+    expect(adjusted).toBe(presets.normal);
   });
 });

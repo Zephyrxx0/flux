@@ -2,9 +2,16 @@
 
 import { useEffect, useRef } from "react";
 import { liveStore } from "@/stores/liveStore";
-import { applyPhaseTransitionDeltas } from "@/lib/api/phaseTransitions";
+import { applyPhaseTransitionDeltas, type TransitionEvent } from "@/lib/api/phaseTransitions";
 import type { DemoEvent } from "@/types/demo";
 import { presets } from "@/simulation/presets";
+
+function resolvePhaseEvent(from: string, to: string): TransitionEvent | null {
+  if (to === "half-time") return "halftime";
+  if (to === "full-time") return "full-time";
+  if (from === "first-half" && to === "second-half") return "second-half-start";
+  return null;
+}
 
 export function usePhaseTransitionWatcher(currentDemoEvent?: DemoEvent | null) {
   const previousPhaseRef = useRef<string | null>(null);
@@ -33,12 +40,9 @@ export function usePhaseTransitionWatcher(currentDemoEvent?: DemoEvent | null) {
               return;
             }
 
-            let eventType: string;
-            if (phase === "half-time") eventType = "halftime";
-            else if (phase === "full-time") eventType = "full-time";
-            else if (previousPhaseRef.current === "first-half" && phase === "second-half") eventType = "second-half-start";
-            else {
-              previousPhaseRef.current = phase;
+            const eventType = resolvePhaseEvent(previousPhaseRef.current, phase);
+            previousPhaseRef.current = phase;
+            if (!eventType) {
               return;
             }
 
@@ -46,8 +50,6 @@ export function usePhaseTransitionWatcher(currentDemoEvent?: DemoEvent | null) {
             const baseInput = currentState.v1ZoneData ?? presets.normal;
             const adjusted = applyPhaseTransitionDeltas(baseInput, eventType);
             currentState.initializeSim(adjusted);
-
-            previousPhaseRef.current = phase;
           }
         }
       }

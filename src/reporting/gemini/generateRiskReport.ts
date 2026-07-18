@@ -100,7 +100,39 @@ async function invokeGeminiViaFetch(prompt: string, timeoutMs: number): Promise<
 
 export async function generateRiskReport({ output, invokeModel, timeoutMs = 60_000 }: GenerateRiskReportArgs): Promise<RiskReport> {
   const prompt = buildGeminiRiskPrompt(output)
-  const invoke = invokeModel ?? ((inputPrompt: string) => invokeGeminiViaFetch(inputPrompt, timeoutMs))
-  const rawResponse = await invoke(prompt)
-  return parseAiPayload(rawResponse)
+
+  if (invokeModel) {
+    const rawResponse = await invokeModel(prompt)
+    return parseAiPayload(rawResponse)
+  }
+
+  const controller = new AbortController()
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs)
+
+  try {
+    const response = await fetch("/api/report", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ output }),
+      signal: controller.signal,
+    })
+
+    if (!response.ok) {
+      throw new GeminiServerError(`Report API returned ${response.status}`)
+    }
+
+    const parsed = RiskReportSchema.safeParse(await response.json())
+    if (!parsed.success) {
+      throw new GeminiInvalidSchemaError("Report API response failed risk report schema validation")
+    }
+
+    return parsed.data
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") {
+      throw new GeminiTimeoutError("Report API request timed out")
+    }
+    throw error
+  } finally {
+    window.clearTimeout(timeout)
+  }
 }

@@ -7,8 +7,8 @@ vi.mock("@/lib/api/phaseTransitions", () => ({
   applyPhaseTransitionDeltas: vi.fn((base, eventType, zoneDeltas) => ({ adjusted: true, eventType, zoneDeltas })),
 }));
 
-let phaseCallback: (phase: string | null) => void;
-let scoreCallback: (score: string | null) => void;
+let phaseCallback: (state: { match: { phase: string | null } }, prevState: { match: { phase: string | null } }) => void;
+let scoreCallback: (state: { match: { score: string | null } }, prevState: { match: { score: string | null } }) => void;
 let unsubPhase = vi.fn();
 let unsubScore = vi.fn();
 const mockInitializeSim = vi.fn();
