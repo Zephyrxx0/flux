@@ -1,5 +1,5 @@
 import { animate } from "animejs"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import type { LatestZoneRisk } from "@/visualization/selectors/buildVisualizationModel"
 import {
@@ -55,9 +55,19 @@ export function StadiumHeatmap({ latestZoneRisk }: StadiumHeatmapProps) {
     }
   }, [latestZoneRisk, polygonZoneIds, reducedMotion])
 
+  const [showAccessibility, setShowAccessibility] = useState(false);
+
   return (
     <section className="space-y-3" data-testid="stadium-heatmap">
-      <h3 className="text-base font-semibold text-slate-900">Stadium Risk Heatmap</h3>
+      <div className="flex justify-between items-center">
+        <h3 className="text-base font-semibold text-white">Stadium Risk Heatmap</h3>
+        <button 
+          onClick={() => setShowAccessibility(!showAccessibility)}
+          className={`text-xs px-2 py-1 rounded border ${showAccessibility ? 'bg-blue-100 border-blue-300 text-blue-700' : 'bg-white border-slate-200 text-slate-600'}`}
+        >
+          {showAccessibility ? "Hide Accessible Routes" : "Show Accessible Routes"}
+        </button>
+      </div>
 
       <svg
         viewBox="0 0 600 380"
@@ -127,11 +137,28 @@ export function StadiumHeatmap({ latestZoneRisk }: StadiumHeatmapProps) {
           )
         })}
         </g>
+
+        {/* Accessibility Routes Overlay */}
+        {showAccessibility && (
+          <g data-testid="accessibility-routes">
+            {/* North Gate to Pitch Accessible Ramp */}
+            <path d="M 300 50 L 300 90 Q 300 110 320 110 L 400 110" fill="none" stroke="#2563eb" strokeWidth="4" strokeDasharray="6,4" opacity="0.8" />
+            <circle cx="300" cy="50" r="6" fill="#2563eb" />
+            
+            {/* South Gate to Concourse Elevator */}
+            <path d="M 300 330 L 300 290 Q 300 270 280 270 L 200 270" fill="none" stroke="#2563eb" strokeWidth="4" strokeDasharray="6,4" opacity="0.8" />
+            <circle cx="300" cy="330" r="6" fill="#2563eb" />
+            <rect x="190" y="260" width="10" height="20" fill="#2563eb" />
+            
+            {/* Accessible Seating Area */}
+            <rect x="250" y="80" width="100" height="15" fill="#3b82f6" opacity="0.5" />
+          </g>
+        )}
       </svg>
 
-      <p className="text-xs text-slate-500">Grey regions indicate no current simulation data for that zone.</p>
+      <p className="text-xs text-white">Grey regions indicate no current simulation data for that zone.</p>
 
-      <div data-testid="heatmap-unmapped-zones" className="text-xs text-slate-600" aria-live="polite">
+      <div data-testid="heatmap-unmapped-zones" className="text-xs text-white" aria-live="polite">
         {unmappedZones.length > 0 ? `Unmapped zones: ${unmappedZones.join(", ")}` : "All zones are mapped to the stadium silhouette."}
       </div>
     </section>

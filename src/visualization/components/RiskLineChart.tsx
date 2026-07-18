@@ -126,19 +126,20 @@ export function RiskLineChart({ output }: RiskLineChartProps) {
         />
       </div>
 
-      <svg
-        width="100%"
-        height="100%"
-        viewBox={`0 0 ${CHART_SIZE.width} ${CHART_SIZE.height}`}
-        preserveAspectRatio="xMidYMid meet"
-        role="img"
-        aria-label="Zone risk line chart"
-        className="flex-1 min-h-0"
-        data-testid="risk-line-svg"
-        data-transition-ms={VISUALIZATION_TRANSITION_MS}
-        data-reduced-motion={String(reducedMotion)}
-        data-y-domain="0,1"
-      >
+      <div className="w-full h-[400px] mt-2">
+        <svg
+          width="100%"
+          height="100%"
+          viewBox={`0 0 ${CHART_SIZE.width} ${CHART_SIZE.height}`}
+          preserveAspectRatio="xMidYMid meet"
+          role="img"
+          aria-label="Zone risk line chart"
+          className="w-full h-full"
+          data-testid="risk-line-svg"
+          data-transition-ms={VISUALIZATION_TRANSITION_MS}
+          data-reduced-motion={String(reducedMotion)}
+          data-y-domain="0,1"
+        >
         <line
           x1={CHART_SIZE.marginLeft}
           y1={CHART_SIZE.height - CHART_SIZE.marginBottom}
@@ -216,7 +217,8 @@ export function RiskLineChart({ output }: RiskLineChartProps) {
             />
           )
         })}
-      </svg>
+        </svg>
+      </div>
     </section>
   )
 }
