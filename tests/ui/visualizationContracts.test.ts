@@ -15,7 +15,7 @@ describe("visualization contracts", () => {
     expect(riskBandFromRatio(0.8)).toBe("amber")
     expect(riskBandFromRatio(0.949)).toBe("amber")
     expect(riskBandFromRatio(0.95)).toBe("red")
-    expect(RISK_BAND_ORDER).toEqual(["green", "amber", "red"])
+    expect(RISK_BAND_ORDER).toEqual(["green", "amber", "red", "critical"])
   })
 
   it("exports transition constants within D-08 range", () => {

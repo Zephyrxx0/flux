@@ -20,7 +20,7 @@ function buildOutputFixture(): SimulationOutput {
   ] as const
 
   return {
-    schemaVersion: "1.0.0",
+    schemaVersion: "1.1.0",
     runDeterministicHash: "viz-chart-fixture",
     mode: "zone",
     phaseZoneMatrix: phaseIds.flatMap((phaseId, phaseIndex) =>

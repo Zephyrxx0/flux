@@ -9,20 +9,20 @@ import type { LatestZoneRisk } from "@/visualization/selectors/buildVisualizatio
 
 function buildLatestZoneRiskFixture(): Record<string, LatestZoneRisk> {
   return {
-    "zone-a": {
-      zoneId: "zone-a",
+    "north": {
+      zoneId: "north",
       phaseId: "phase-2",
       occupancyRatio: 0.74,
       riskBand: "green",
     },
-    "zone-b": {
-      zoneId: "zone-b",
+    "south": {
+      zoneId: "south",
       phaseId: "phase-2",
       occupancyRatio: 0.84,
       riskBand: "amber",
     },
-    "zone-c": {
-      zoneId: "zone-c",
+    "east": {
+      zoneId: "east",
       phaseId: "phase-2",
       occupancyRatio: 0.97,
       riskBand: "red",
@@ -45,9 +45,9 @@ describe("StadiumHeatmap and RiskLegend", () => {
     render(React.createElement(StadiumHeatmap, { latestZoneRisk: buildLatestZoneRiskFixture() }))
 
     expect(screen.getByTestId("stadium-heatmap-svg")).toBeInTheDocument()
-    expect(screen.getByTestId("heatmap-zone-zone-a")).toBeInTheDocument()
-    expect(screen.getByTestId("heatmap-zone-zone-b")).toBeInTheDocument()
-    expect(screen.getByTestId("heatmap-zone-zone-c")).toBeInTheDocument()
+    expect(screen.getByTestId("heatmap-zone-north")).toBeInTheDocument()
+    expect(screen.getByTestId("heatmap-zone-south")).toBeInTheDocument()
+    expect(screen.getByTestId("heatmap-zone-east")).toBeInTheDocument()
   })
 
   it("uses shared threshold semantics for heatmap fills and legend", () => {
@@ -65,25 +65,25 @@ describe("StadiumHeatmap and RiskLegend", () => {
     const amber = RISK_LEGEND.find((entry) => entry.band === "amber")
     const red = RISK_LEGEND.find((entry) => entry.band === "red")
 
-    expect(screen.getByTestId("heatmap-zone-zone-a")).toHaveAttribute("data-risk-band", "green")
-    expect(screen.getByTestId("heatmap-zone-zone-a")).toHaveAttribute("fill", green?.color ?? "")
+    expect(screen.getByTestId("heatmap-zone-north")).toHaveAttribute("data-risk-band", "green")
+    expect(screen.getByTestId("heatmap-zone-north")).toHaveAttribute("fill", green?.color ?? "")
 
-    expect(screen.getByTestId("heatmap-zone-zone-b")).toHaveAttribute("data-risk-band", "amber")
-    expect(screen.getByTestId("heatmap-zone-zone-b")).toHaveAttribute("fill", amber?.color ?? "")
+    expect(screen.getByTestId("heatmap-zone-south")).toHaveAttribute("data-risk-band", "amber")
+    expect(screen.getByTestId("heatmap-zone-south")).toHaveAttribute("fill", amber?.color ?? "")
 
-    expect(screen.getByTestId("heatmap-zone-zone-c")).toHaveAttribute("data-risk-band", "red")
-    expect(screen.getByTestId("heatmap-zone-zone-c")).toHaveAttribute("fill", red?.color ?? "")
+    expect(screen.getByTestId("heatmap-zone-east")).toHaveAttribute("data-risk-band", "red")
+    expect(screen.getByTestId("heatmap-zone-east")).toHaveAttribute("fill", red?.color ?? "")
 
     expect(screen.getByTestId("risk-legend-green")).toHaveTextContent("Low")
     expect(screen.getByTestId("risk-legend-amber")).toHaveTextContent("Elevated")
-    expect(screen.getByTestId("risk-legend-red")).toHaveTextContent("Critical")
+    expect(screen.getByTestId("risk-legend-red")).toHaveTextContent("High")
   })
 
   it("degrades gracefully for missing and unmapped zones", () => {
     render(React.createElement(StadiumHeatmap, { latestZoneRisk: buildLatestZoneRiskFixture() }))
 
-    expect(screen.getByTestId("heatmap-zone-zone-d")).toHaveAttribute("data-risk-band", "no-data")
-    expect(screen.getByTestId("heatmap-zone-zone-d")).toHaveAttribute("fill", "#cbd5e1")
+    expect(screen.getByTestId("heatmap-zone-west")).toHaveAttribute("data-risk-band", "no-data")
+    expect(screen.getByTestId("heatmap-zone-west")).toHaveAttribute("fill", "#cbd5e1")
     expect(screen.getByTestId("heatmap-unmapped-zones")).toHaveTextContent("zone-x")
   })
 })

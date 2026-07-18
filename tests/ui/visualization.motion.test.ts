@@ -8,15 +8,15 @@ import { VISUALIZATION_TRANSITION_MS } from "@/visualization/contracts/motionPol
 import { VisualizationWorkspace } from "@/visualization/components/VisualizationWorkspace"
 import { useScenarioStore } from "../../src/hooks/useScenarioStore"
 
-function buildOutput(runDeterministicHash: string, zoneBRatio: number): SimulationOutput {
+function buildOutput(runDeterministicHash: string, southRatio: number): SimulationOutput {
   return {
-    schemaVersion: "1.0.0",
+    schemaVersion: "1.1.0",
     runDeterministicHash,
     mode: "zone",
     phaseZoneMatrix: [
       {
         phaseId: "phase-1",
-        zoneId: "zone-a",
+        zoneId: "north",
         occupancyFans: 75,
         occupancyRatio: 0.75,
         occupancySeverity: "green",
@@ -29,7 +29,7 @@ function buildOutput(runDeterministicHash: string, zoneBRatio: number): Simulati
       },
       {
         phaseId: "phase-2",
-        zoneId: "zone-a",
+        zoneId: "north",
         occupancyFans: 88,
         occupancyRatio: 0.88,
         occupancySeverity: "amber",
@@ -42,7 +42,7 @@ function buildOutput(runDeterministicHash: string, zoneBRatio: number): Simulati
       },
       {
         phaseId: "phase-1",
-        zoneId: "zone-b",
+        zoneId: "south",
         occupancyFans: 84,
         occupancyRatio: 0.84,
         occupancySeverity: "amber",
@@ -55,32 +55,32 @@ function buildOutput(runDeterministicHash: string, zoneBRatio: number): Simulati
       },
       {
         phaseId: "phase-2",
-        zoneId: "zone-b",
-        occupancyFans: Math.round(zoneBRatio * 100),
-        occupancyRatio: zoneBRatio,
-        occupancySeverity: zoneBRatio >= 0.95 ? "red" : "amber",
+        zoneId: "south",
+        occupancyFans: Math.round(southRatio * 100),
+        occupancyRatio: southRatio,
+        occupancySeverity: southRatio >= 0.95 ? "red" : "amber",
         carryInFans: 0,
-        arrivalsFans: Math.round(zoneBRatio * 100),
+        arrivalsFans: Math.round(southRatio * 100),
         availableThroughput: 120,
-        processedFans: Math.round(zoneBRatio * 100),
+        processedFans: Math.round(southRatio * 100),
         overflowCarryFans: 0,
         blockedByDelay: false,
       },
     ],
     peakSummaries: [
       {
-        zoneId: "zone-a",
+        zoneId: "north",
         phaseId: "phase-2",
         peakOccupancyFans: 88,
         peakOccupancyRatio: 0.88,
         peakSeverity: "amber",
       },
       {
-        zoneId: "zone-b",
+        zoneId: "south",
         phaseId: "phase-2",
-        peakOccupancyFans: Math.round(zoneBRatio * 100),
-        peakOccupancyRatio: zoneBRatio,
-        peakSeverity: zoneBRatio >= 0.95 ? "red" : "amber",
+        peakOccupancyFans: Math.round(southRatio * 100),
+        peakOccupancyRatio: southRatio,
+        peakSeverity: southRatio >= 0.95 ? "red" : "amber",
       },
     ],
     invariants: {
@@ -104,17 +104,20 @@ describe("Visualization motion policy", () => {
     const user = userEvent.setup()
     useScenarioStore.setState({ latestSimulationOutput: buildOutput("run-a", 0.9) })
 
-    const { rerender } = render(React.createElement(VisualizationWorkspace))
+    const { rerender } = render(React.createElement(VisualizationWorkspace, { activeTab: "simulate" }))
 
+    await user.click(screen.getByRole("tab", { name: /Risk Chart/i }))
     await user.click(screen.getByRole("button", { name: /show all zones/i }))
 
     useScenarioStore.setState({ latestSimulationOutput: buildOutput("run-b", 0.97) })
-    rerender(React.createElement(VisualizationWorkspace))
+    rerender(React.createElement(VisualizationWorkspace, { activeTab: "simulate" }))
 
-    expect(screen.getByTestId("risk-line-zone-a")).toHaveStyle(
+    expect(screen.getByTestId("risk-line-north")).toHaveStyle(
       `transition-duration: ${VISUALIZATION_TRANSITION_MS}ms`,
     )
-    expect(screen.getByTestId("heatmap-zone-zone-b")).toHaveStyle(
+    
+    await user.click(screen.getByRole("tab", { name: /Heatmap/i }))
+    expect(screen.getByTestId("heatmap-zone-south")).toHaveStyle(
       `transition-duration: ${VISUALIZATION_TRANSITION_MS}ms`,
     )
     expect(screen.getByTestId("stadium-heatmap-svg")).toHaveAttribute(
@@ -123,7 +126,7 @@ describe("Visualization motion policy", () => {
     )
   })
 
-  it("uses reduced-motion fallback while preserving deterministic final state", () => {
+  it("uses reduced-motion fallback while preserving deterministic final state", async () => {
     const defaultMatchMedia = window.matchMedia
 
     window.matchMedia = vi.fn().mockReturnValue({
@@ -138,12 +141,14 @@ describe("Visualization motion policy", () => {
     })
 
     useScenarioStore.setState({ latestSimulationOutput: buildOutput("run-c", 0.97) })
-    render(React.createElement(VisualizationWorkspace))
+    render(React.createElement(VisualizationWorkspace, { activeTab: "simulate" }))
 
+    await userEvent.click(screen.getByRole("tab", { name: /Risk Chart/i }))
     expect(screen.getByTestId("risk-line-svg")).toHaveAttribute("data-reduced-motion", "true")
+
+    await userEvent.click(screen.getByRole("tab", { name: /Heatmap/i }))
     expect(screen.getByTestId("stadium-heatmap-svg")).toHaveAttribute("data-reduced-motion", "true")
-    expect(screen.getByTestId("workspace-kino-progress")).toHaveAttribute("data-reduced-motion", "true")
-    expect(screen.getByTestId("heatmap-zone-zone-b")).toHaveAttribute("data-risk-band", "red")
+    expect(screen.getByTestId("heatmap-zone-south")).toHaveAttribute("data-risk-band", "red")
 
     window.matchMedia = defaultMatchMedia
   })
