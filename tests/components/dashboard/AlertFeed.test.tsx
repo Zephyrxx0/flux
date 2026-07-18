@@ -50,9 +50,9 @@ describe("AlertFeed", () => {
     const { container } = render(<AlertFeed />);
     
     expect(screen.getByText("All good")).toBeInTheDocument();
-    expect(screen.getByText("NOMINAL")).toBeInTheDocument();
+    expect(screen.getByText("nominal")).toBeInTheDocument();
     
-    const card = container.querySelector(".border-emerald-500");
+    const card = container.querySelector("[class*='bg-emerald-500']");
     expect(card).toBeInTheDocument();
   });
 
@@ -63,9 +63,9 @@ describe("AlertFeed", () => {
     const { container } = render(<AlertFeed />);
     
     expect(screen.getByText("Watch out")).toBeInTheDocument();
-    expect(screen.getByText("WARNING")).toBeInTheDocument();
+    expect(screen.getByText("warning")).toBeInTheDocument();
     
-    const card = container.querySelector(".border-amber-500");
+    const card = container.querySelector("[class*='bg-amber-500']");
     expect(card).toBeInTheDocument();
   });
 
@@ -76,10 +76,10 @@ describe("AlertFeed", () => {
     const { container } = render(<AlertFeed />);
     
     expect(screen.getByText("Danger")).toBeInTheDocument();
-    expect(screen.getByText("CRITICAL")).toBeInTheDocument();
-    expect(screen.getByText("[Zone: north]")).toBeInTheDocument();
+    expect(screen.getByText("critical")).toBeInTheDocument();
+    expect(screen.getByText("Zone north")).toBeInTheDocument();
     
-    const card = container.querySelector(".border-red-500");
+    const card = container.querySelector("[class*='bg-red-500']");
     expect(card).toBeInTheDocument();
   });
 

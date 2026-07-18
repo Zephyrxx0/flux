@@ -35,8 +35,8 @@ describe("MatchBanner", () => {
   });
 
   it("Test 3: renders upcoming state", () => {
-    vi.mocked(liveStore.useLiveStore).mockImplementation((selector: any) => selector({ match: null }));
-    render(<MatchBanner upcomingMatch={{ homeTeam: "Germany", awayTeam: "France", localDate: "2026-06-12T12:00:00Z" }} />);
+    vi.mocked(liveStore.useLiveStore).mockImplementation((selector: any) => selector({ match: null, upcomingMatch: { homeTeam: "Germany", awayTeam: "France", localDate: "2026-06-12T12:00:00Z" } }));
+    render(<MatchBanner />);
     expect(screen.getByText("Germany")).toBeInTheDocument();
     expect(screen.getByText("France")).toBeInTheDocument();
     expect(screen.getByText("UPCOMING")).toBeInTheDocument();

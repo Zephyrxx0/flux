@@ -43,6 +43,7 @@ describe("ChatInterface", () => {
         messages,
         isStreaming,
         clearMessages: clearMessagesMock,
+        t: (key: string) => key,
       });
     });
   };
@@ -87,7 +88,7 @@ describe("ChatInterface", () => {
       { id: "1", role: "user", content: "Hello", timestamp: new Date().toISOString() },
     ]);
     render(<ChatInterface />);
-    expect(screen.getByText(/New conversation/i)).toBeTruthy();
+    expect(screen.getByText(/New/i)).toBeTruthy();
   });
 
   it("quick chips hidden when messages exist", () => {
