@@ -2,7 +2,7 @@ import type { SimulationInput } from "../../src/simulation/contracts/input.schem
 
 export function createBaseInput(overrides: Partial<SimulationInput> = {}): SimulationInput {
   return {
-    schemaVersion: "1.0.0",
+    schemaVersion: "1.1.0",
     mode: "zone",
     phases: [
       { id: "entry", order: 1, durationMin: 15 },

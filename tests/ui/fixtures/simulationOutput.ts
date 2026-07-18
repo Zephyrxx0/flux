@@ -1,7 +1,7 @@
 import type { SimulationOutput } from "@/simulation/contracts/output.schema"
 
 export const simulationOutputFixture: SimulationOutput = {
-  schemaVersion: "1.0.0",
+  schemaVersion: "1.1.0",
   runDeterministicHash: "fixture-hash-01",
   mode: "zone",
   phaseZoneMatrix: [
