@@ -172,7 +172,7 @@ Plans:
 
 **Wave 1** *(parallel, no dependencies)*
 
-- [ ] 19-01-PLAN.md — Foundation: usePoller<T> extraction, i18n expansion (7 new languages), AI sustainability/transport POST routes, weather city config, highlightedZone store slice
+- [x] 19-01-PLAN.md — Foundation: usePoller<T> extraction, i18n expansion (7 new languages), AI sustainability/transport POST routes, weather city config, highlightedZone store slice
 
 **Wave 2** *(blocked on Wave 1 — uses usePoller)*
 
@@ -327,4 +327,4 @@ v2.0 phases execute in numeric order: 13 → 14 → 15 → 16 → 17 → 18 → 
 | 16. Fan Chatbot | v2.0 | 4/4 | Complete   | 2026-07-15 |
 | 17. Weather Integration | v2.0 | 3/3 | Complete   | 2026-07-15 |
 | 18. Demo Mode + Integration Wiring | v2.0 | 0/0 | Not started | - |
-| 19. Audit Remediation and Codebase Hardening | v2.0 | 0/4 | Planning Complete | - |
+| 19. Audit Remediation and Codebase Hardening | v2.0 | 1/4 | In Progress | 2026-07-18 |
