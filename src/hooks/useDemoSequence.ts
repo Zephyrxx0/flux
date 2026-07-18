@@ -9,6 +9,7 @@ import { presets } from "@/simulation/presets";
 export function useDemoSequence(isActive: boolean, advanceIntervalMs: number = 5000) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [timelineVersion, setTimelineVersion] = useState(0);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isVisibleRef = useRef(true);
@@ -24,6 +25,7 @@ export function useDemoSequence(isActive: boolean, advanceIntervalMs: number = 5
         .then((data) => {
           timelineRef.current = data;
           setCurrentIndex(0);
+          setTimelineVersion((version) => version + 1);
           setIsPlaying(true);
         })
         .catch((err) => {
@@ -53,7 +55,7 @@ export function useDemoSequence(isActive: boolean, advanceIntervalMs: number = 5
     if (timeline && currentIndex >= timeline.length - 1 && isPlaying) {
       setIsPlaying(false);
     }
-  }, [currentIndex, isPlaying]);
+  }, [currentIndex, isPlaying, timelineVersion]);
 
   // Interval management
   useEffect(() => {
@@ -101,7 +103,7 @@ export function useDemoSequence(isActive: boolean, advanceIntervalMs: number = 5
         state.initializeSim(adjusted);
       }
     }
-  }, [currentIndex, setMatch]);
+  }, [currentIndex, setMatch, timelineVersion]);
 
   return {
     currentEvent: timelineRef.current?.[currentIndex] ?? null,

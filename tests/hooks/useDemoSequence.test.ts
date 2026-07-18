@@ -13,7 +13,7 @@ const mockInitializeSim = vi.fn();
 
 vi.mock("@/stores/liveStore", () => ({
   useLiveStore: (selector: any) => selector({ setMatch: mockSetMatch, initializeSim: mockInitializeSim }),
-  liveStore: { getState: () => ({ v1ZoneData: null, initializeSim: mockInitializeSim }) },
+  liveStore: { getState: () => ({ simConfig: null, initializeSim: mockInitializeSim }) },
 }));
 
 describe("useDemoSequence", () => {

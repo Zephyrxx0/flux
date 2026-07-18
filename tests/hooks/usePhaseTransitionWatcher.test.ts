@@ -26,7 +26,7 @@ vi.mock("@/stores/liveStore", () => ({
       }
     }),
     getState: vi.fn(() => ({
-      v1ZoneData: null,
+      simConfig: null,
       initializeSim: mockInitializeSim,
     })),
   },
