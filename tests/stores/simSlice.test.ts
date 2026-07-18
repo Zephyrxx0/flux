@@ -10,14 +10,14 @@ describe("simSlice", () => {
 
   it("initial state has null zone data and initialized false", () => {
     const state = liveStore.getState();
-    expect(state.v1ZoneData).toBeNull();
+    expect(state.simConfig).toBeNull();
     expect(state.initialized).toBe(false);
   });
 
   it("initializes with normal preset data", () => {
     liveStore.getState().initializeSim(presets.normal);
     const state = liveStore.getState();
-    expect(state.v1ZoneData).toEqual(presets.normal);
+    expect(state.simConfig).toEqual(presets.normal);
     expect(state.initialized).toBe(true);
   });
 
@@ -25,7 +25,7 @@ describe("simSlice", () => {
     liveStore.getState().initializeSim(presets.normal);
     liveStore.getState().reset();
     const state = liveStore.getState();
-    expect(state.v1ZoneData).toBeNull();
+    expect(state.simConfig).toBeNull();
     expect(state.initialized).toBe(false);
   });
 });
