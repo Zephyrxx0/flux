@@ -180,7 +180,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 — /api/report must exist for security fix)*
 
-- [ ] 19-03-PLAN.md — Security & UX: client-side Gemini key removal, type hole fix, v1ZoneData rename, icon swap, sync effect removal, SustainabilityPanel, volunteer dynamism, nav→heatmap wiring, expanded TransportWidget
+- [x] 19-03-PLAN.md — Security & UX: client-side Gemini key removal, type hole fix, v1ZoneData rename, icon swap, sync effect removal, SustainabilityPanel, volunteer dynamism, nav→heatmap wiring, expanded TransportWidget
 
 **Wave 4** *(blocked on Wave 3 — fixes must be in place before tests)*
 
