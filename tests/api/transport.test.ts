@@ -28,7 +28,7 @@ const transportRequestBody = {
 
 describe("POST /api/transport", () => {
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.resetAllMocks();
   });
 
   it("returns AI recommendations when Gemini returns schema-valid JSON", async () => {

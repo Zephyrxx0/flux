@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
   const prompt = buildGeminiRiskPrompt(parsed.data.output);
   let fallbackReason: ReportFallbackReason = "ai-generation-failed";
 
-  for (let attempt = 0; attempt < 2; attempt += 1) {
+  for (let attempt = 0; attempt < 3; attempt += 1) {
     try {
       const rawJson = await collectGeminiJson(prompt, request.signal);
       const output = parseAiReport(rawJson);

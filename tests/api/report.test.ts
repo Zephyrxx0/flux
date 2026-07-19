@@ -81,6 +81,20 @@ describe("POST /api/report", () => {
     expect(collectGeminiJson).toHaveBeenCalledTimes(2);
   });
 
+  it("uses the third AI attempt before falling back", async () => {
+    vi.mocked(collectGeminiJson)
+      .mockResolvedValueOnce("{ this is not json")
+      .mockResolvedValueOnce("{ still not json")
+      .mockResolvedValueOnce(JSON.stringify(validAiReport));
+
+    const response = await POST(makeReportRequest() as never);
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body.source).toBe("ai");
+    expect(collectGeminiJson).toHaveBeenCalledTimes(3);
+  });
+
   it("returns deterministic fallback instead of 502 when Gemini returns malformed JSON", async () => {
     vi.mocked(collectGeminiJson).mockResolvedValueOnce("{ this is not json");
 
