@@ -120,5 +120,3 @@ Dockerfile
 !.planning/**/*-PLAN.md
 !.planning/**/*-SUMMARY.md
 skills-lock.json
-!FLUX*
-!THERMO*
